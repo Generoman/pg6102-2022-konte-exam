@@ -18,7 +18,7 @@ class ShippingRabbitListener(
 
     private val messageStart = "ShippedOrderId="
 
-    @RabbitHandler
+    //@RabbitHandler
     fun handleMessage(message: String) {
         /**
          * Pseudo-log
