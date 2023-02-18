@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("api/processing")
+@RequestMapping("/api/processing")
 class ProcessingController(
     @Autowired private val processingService: ProcessingService,
 ) {
@@ -20,7 +20,7 @@ class ProcessingController(
      */
     @GetMapping("/happy")
     fun getHappy(): ResponseEntity<Any> {
-        return ResponseEntity.ok().body("Happy!")
+        return ResponseEntity.ok().body("Happy! :)")
     }
 
     @PostMapping("/order")

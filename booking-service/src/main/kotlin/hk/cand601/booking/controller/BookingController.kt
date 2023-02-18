@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("api/booking")
+@RequestMapping("/api/booking")
 class BookingController(
     @Autowired private val bookingService: BookingService,
     @Autowired private val processingIntegrationService: ProcessingIntegrationService,
@@ -24,7 +24,10 @@ class BookingController(
      */
     @GetMapping("/happy")
     fun getHappyPath(): ResponseEntity<Any> {
-        return ResponseEntity.ok().body("Happy!")
+        if(processingIntegrationService.isHappy()) {
+            return ResponseEntity.ok().body("Happy! :)")
+        }
+        return ResponseEntity.ok().body("Not happy. :(")
     }
 
     @PostMapping("/echo")

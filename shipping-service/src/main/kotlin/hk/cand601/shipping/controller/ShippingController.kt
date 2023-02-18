@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("api/shipping")
+@RequestMapping("/api/shipping")
 class ShippingController(
     @Autowired private val shippingService: ShippingService,
 ) {
@@ -18,7 +18,7 @@ class ShippingController(
      */
     @GetMapping("/happy")
     fun getHappyPath(): ResponseEntity<Any> {
-        return ResponseEntity.ok().body("Happy!")
+        return ResponseEntity.ok().body("Happy! :)")
     }
 
     @GetMapping("")

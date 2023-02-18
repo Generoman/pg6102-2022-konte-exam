@@ -27,7 +27,7 @@ class ShippingRabbitListener(
 
         val id = message.substring(messageStart.length).toLong()
         bookingService.getBookOrder(id)?.let { bookOrder ->
-            processingIntegrationService.updateToShipped(bookOrder)?.let {
+            processingIntegrationService.updateToShipped(bookOrder).let {
                 bookingService.updateBookOrder(it)
             }.run {
                 throw EntityNotUpdatedException("Book order with id ${bookOrder.id} not updated")

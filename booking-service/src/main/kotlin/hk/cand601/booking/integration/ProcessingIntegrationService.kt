@@ -20,43 +20,42 @@ class ProcessingIntegrationService() {
         bookOrder.id?.let {
             val url = "$baseUrl/order"
             val bookOrderDTO = bookOrder.toDto()
-            println(bookOrderDTO)
+
             try {
-                println("Trying to contact ProcessService...")
-                val response = restTemplate.postForEntity(url, bookOrderDTO, BookOrderDTO::class.java)
-                val responseBody = response.body
-                println(responseBody)
-                responseBody?.let {
+
+                restTemplate.postForEntity(url, bookOrderDTO, BookOrderDTO::class.java).body?.let {
                     return it
                 }
             } catch (e: Exception) {
                 throw ServiceInterruptionException("Processing Service could not be reached. Message: ${e.message}")
             }
         }.run {
-            throw BadRequestException("Entity missing id")
+            throw BadRequestException("Order missing id")
         }
     }
 
-    fun updateToShipped(bookOrder: BookOrderEntity): BookOrderEntity? {
+    fun updateToShipped(bookOrder: BookOrderEntity): BookOrderEntity {
         val url = "$baseUrl/shipped"
 
         try {
-            val response = restTemplate.postForEntity(url, bookOrder.isbn, ShipmentDTO::class.java)
-            val responseBody = response.body
-
-            responseBody?.let {
+            restTemplate.postForEntity(url, bookOrder.isbn, Any::class.java).let {
                 bookOrder.status = "Shipped"
                 return bookOrder
             }
         } catch (e: Exception){
-            throw ServiceInterruptionException("Processing Service interrupted. Message: ${e.message}")
+            throw ServiceInterruptionException("Processing Service could not be reached. Message: ${e.message}")
         }
+    }
 
-        return null
+    fun isHappy(): Boolean {
+        val url = "$baseUrl/happy"
+
+        try {
+            restTemplate.getForEntity(url, Any::class.java).let {
+                return true
+            }
+        } catch (e: Exception) {
+            return false
+        }
     }
 }
-
-data class ShipmentDTO(
-    val isbn: String,
-    val location: String
-)
