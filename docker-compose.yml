@@ -2,12 +2,12 @@ version: '3.1'
 services:
   rabbitmq:
     container_name: 'rabbit-mq'
-    image: rabbitmq:3.11.3-alpine
+    image: rabbitmq:3.11.3-management-alpine
     ports:
       - '5672:5672'
       - '15672:15672'
     volumes:
-      - ./config/rabbitmq/definitions.json:/etc/rabbitmq/definitions:ro
+      - ./config/rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
       - ./config/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
 
   booking-db:

@@ -22,7 +22,6 @@ class ProcessingIntegrationService() {
             val bookOrderDTO = bookOrder.toDto()
 
             try {
-
                 restTemplate.postForEntity(url, bookOrderDTO, BookOrderDTO::class.java).body?.let {
                     return it
                 }
