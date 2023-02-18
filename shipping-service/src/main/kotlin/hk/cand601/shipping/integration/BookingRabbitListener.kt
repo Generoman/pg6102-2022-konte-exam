@@ -15,7 +15,7 @@ class BookingRabbitListener(
     @Autowired private val shippingRabbitDispatcher: ShippingRabbitDispatcher
 ) {
 
-    //@RabbitHandler
+    @RabbitHandler
     fun handleMessage(message: BookOrderDTO) {
         val shipment = ShipmentEntity(
             orderId = message.id,

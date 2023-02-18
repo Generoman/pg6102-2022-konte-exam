@@ -1,4 +1,4 @@
-package hk.rmm.discovery
+package hk.cand601.discovery
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest

@@ -1,5 +1,0 @@
-FROM adoptopenjdk/openjdk11:alpine-slim
-WORKDIR /booking-service
-COPY /target/booking-service-1.0.jar /app/booking-service.jar
-EXPOSE 8091
-ENTRYPOINT ["java", "-jar", "/app/booking-service.jar"]

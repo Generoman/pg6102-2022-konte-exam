@@ -4,6 +4,7 @@ import hk.cand601.processing.service.OrderDTO
 import hk.cand601.processing.service.ProcessingService
 import hk.cand601.processing.exception.BadRequestException
 import hk.cand601.processing.exception.ServiceInterruptionException
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*
 class ProcessingController(
     @Autowired private val processingService: ProcessingService,
 ) {
+
     /**
      * For testing purposes
      */
@@ -23,6 +25,7 @@ class ProcessingController(
 
     @PostMapping("/order")
     fun checkOrder(@RequestBody orderDto: OrderDTO?): ResponseEntity<Any> {
+        println("In checkOrder")
         when(orderDto) {
             null -> throw BadRequestException("Order is null")
             else -> {

@@ -1,15 +1,13 @@
-package hk.cand601.booking
+package hk.cand601.processing
 
-import junit.framework.Assert.assertTrue
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class OrderApplicationTests {
+class ProcessingApplicationTests {
 
     @Test
     fun contextLoads() {
-        assertTrue(true)
     }
 
 }

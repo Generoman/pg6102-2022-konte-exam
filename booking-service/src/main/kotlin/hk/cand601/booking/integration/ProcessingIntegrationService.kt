@@ -20,16 +20,17 @@ class ProcessingIntegrationService() {
         bookOrder.id?.let {
             val url = "$baseUrl/order"
             val bookOrderDTO = bookOrder.toDto()
-
+            println(bookOrderDTO)
             try {
+                println("Trying to contact ProcessService...")
                 val response = restTemplate.postForEntity(url, bookOrderDTO, BookOrderDTO::class.java)
                 val responseBody = response.body
-
+                println(responseBody)
                 responseBody?.let {
                     return it
                 }
             } catch (e: Exception) {
-                throw ServiceInterruptionException("Processing Service interrupted. Message: ${e.message}")
+                throw ServiceInterruptionException("Processing Service could not be reached. Message: ${e.message}")
             }
         }.run {
             throw BadRequestException("Entity missing id")

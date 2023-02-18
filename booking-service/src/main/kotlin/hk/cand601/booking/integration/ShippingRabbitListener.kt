@@ -16,9 +16,9 @@ class ShippingRabbitListener(
     @Autowired private val processingIntegrationService: ProcessingIntegrationService
 ) {
 
-    private val messageStart = "ShippedOrderId=";
+    private val messageStart = "ShippedOrderId="
 
-    //@RabbitHandler
+    @RabbitHandler
     fun handleMessage(message: String) {
         /**
          * Pseudo-log

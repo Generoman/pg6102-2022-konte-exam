@@ -1,10 +1,10 @@
-package hk.rmm.alpha
+package hk.cand601.booking
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class OrderApplicationTests {
+class BookingApplicationTests {
 
     @Test
     fun contextLoads() {
