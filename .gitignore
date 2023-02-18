@@ -1,6 +1,6 @@
 
 # Project exclude paths
 */target/
-*.iml
 /.idea/
 /*/devutils/
+/devutils/

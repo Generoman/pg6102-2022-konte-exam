@@ -4,15 +4,11 @@ import hk.cand601.booking.exception.BadRequestException
 import hk.cand601.booking.exception.ServiceInterruptionException
 import hk.cand601.booking.model.BookOrderDTO
 import hk.cand601.booking.model.BookOrderEntity
-import hk.cand601.booking.model.enum.Location
-import hk.cand601.booking.model.enum.OrderStatus
-import hk.cand601.booking.service.BookingService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 
 @Service
-class ProcessingIntegrationService(@Autowired private val bookingService: BookingService) {
+class ProcessingIntegrationService() {
 
     /**
      * Could not autowire
@@ -48,7 +44,7 @@ class ProcessingIntegrationService(@Autowired private val bookingService: Bookin
             val responseBody = response.body
 
             responseBody?.let {
-                bookOrder.status = OrderStatus.SHIPPED
+                bookOrder.status = "Shipped"
                 return bookOrder
             }
         } catch (e: Exception){
@@ -61,5 +57,5 @@ class ProcessingIntegrationService(@Autowired private val bookingService: Bookin
 
 data class ShipmentDTO(
     val isbn: String,
-    val location: Location
+    val location: String
 )

@@ -1,7 +1,5 @@
 package hk.cand601.processing.service
 
-import hk.cand601.processing.model.enum.Location
-import hk.cand601.processing.model.enum.OrderStatus
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -12,15 +10,15 @@ class ProcessingService(@Autowired private val bookService: BookService) {
         bookService.getBookByIsbn(orderDTO.isbn)?.let {
             if (orderDTO.requestedLocation == it.location) {
                 orderDTO.currentLocation = it.location
-                orderDTO.status = OrderStatus.COMPLETED
+                orderDTO.status = "Completed"
                 return orderDTO
             }
-            if (it.location == Location.IN_SHIPPING) {
-                orderDTO.status = OrderStatus.UNAVAILABLE
+            if (it.location == "In shipping") {
+                orderDTO.status = "Unavailable"
                 return orderDTO
             }
             orderDTO.currentLocation = it.location
-            orderDTO.status = OrderStatus.REGISTERED
+            orderDTO.status = "Registered"
             return orderDTO
         }
         return null
@@ -28,9 +26,9 @@ class ProcessingService(@Autowired private val bookService: BookService) {
 
     fun processShipment(isbn: String): ShipmentDTO? {
         bookService.getBookByIsbn(isbn)?.let {
-            it.location = Location.IN_SHIPPING
+            it.location = "In shipping"
             bookService.updateBook(it)!!
-            return ShipmentDTO(isbn, Location.IN_SHIPPING)
+            return ShipmentDTO(isbn, "In shipping")
         }
         return null
     }
@@ -39,13 +37,13 @@ class ProcessingService(@Autowired private val bookService: BookService) {
 data class OrderDTO(
     val id: Long,
     val isbn: String,
-    var status: OrderStatus,
-    val requestedLocation: Location,
-    var currentLocation: Location?
+    var status: String,
+    val requestedLocation: String,
+    var currentLocation: String?
 
 )
 
 data class ShipmentDTO(
     val isbn: String,
-    val location: Location
+    val location: String
 )

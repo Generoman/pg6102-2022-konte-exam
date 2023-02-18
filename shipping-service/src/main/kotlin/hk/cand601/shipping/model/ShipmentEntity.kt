@@ -1,6 +1,5 @@
 package hk.cand601.shipping.model
 
-import hk.cand601.shipping.model.enum.Location
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -23,10 +22,10 @@ class ShipmentEntity(
     val isbn: String,
 
     @Column(name = "requested_location")
-    val requestedLocation: Location,
+    val requestedLocation: String,
 
     @Column(name = "current_location")
-    val currentLocation: Location,
+    val currentLocation: String,
 
     @Column(name = "created_at")
     val createdAt: LocalDateTime = LocalDateTime.now(),

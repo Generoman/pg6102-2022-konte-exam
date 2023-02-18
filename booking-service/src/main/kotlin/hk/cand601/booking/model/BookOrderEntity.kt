@@ -1,7 +1,5 @@
 package hk.cand601.booking.model
 
-import hk.cand601.booking.model.enum.OrderStatus
-import hk.cand601.booking.model.enum.Location
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -9,9 +7,9 @@ import javax.persistence.*
 @Table(name = "orders")
 class BookOrderEntity(
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_order_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_id_seq")
     @SequenceGenerator(
-        name = "book_order_id_seq",
+        name = "order_id_seq",
         allocationSize = 1
     )
     @Column(name = "id")
@@ -24,10 +22,10 @@ class BookOrderEntity(
     val isbn: String,
 
     @Column(name = "requested_location")
-    val requestedLocation: Location,
+    val requestedLocation: String,
 
     @Column(name = "status")
-    var status: OrderStatus = OrderStatus.PENDING,
+    var status: String = "Pending",
 
     @Column(name = "created_at")
     val createdAt: LocalDateTime = LocalDateTime.now(),
@@ -43,7 +41,7 @@ class BookOrderEntity(
 data class BookOrderDTO(
     val id: Long?,
     val isbn: String,
-    var status: OrderStatus,
-    val requestedLocation: Location,
-    var currentLocation: Location? = null
+    var status: String,
+    val requestedLocation: String,
+    var currentLocation: String? = null
 )

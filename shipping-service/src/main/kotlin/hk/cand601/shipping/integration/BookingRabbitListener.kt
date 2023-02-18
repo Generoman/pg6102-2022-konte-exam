@@ -2,7 +2,6 @@ package hk.cand601.shipping.integration
 
 import hk.cand601.shipping.exception.EntityNotCreatedException
 import hk.cand601.shipping.model.ShipmentEntity
-import hk.cand601.shipping.model.enum.Location
 import hk.cand601.shipping.service.ShippingService
 import org.springframework.amqp.rabbit.annotation.RabbitHandler
 import org.springframework.amqp.rabbit.annotation.RabbitListener
@@ -35,6 +34,6 @@ class BookingRabbitListener(
 data class BookOrderDTO(
     val id: Long,
     val isbn: String,
-    val requestedLocation: Location,
-    val currentLocation: Location,
+    val requestedLocation: String,
+    val currentLocation: String,
 )

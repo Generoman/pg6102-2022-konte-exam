@@ -1,6 +1,5 @@
 package hk.cand601.processing.model
 
-import hk.cand601.processing.model.enum.Location
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -26,7 +25,7 @@ class BookEntity(
     val author: String,
 
     @Column(name = "location")
-    var location: Location,
+    var location: String,
 
     @Column(name = "created_at")
     val createdAt: LocalDateTime = LocalDateTime.now(),
