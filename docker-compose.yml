@@ -1,0 +1,121 @@
+# TODO: remove "devutils/" from build stage of services
+version: '3.1'
+services:
+  rabbitmq:
+    container_name: 'rabbit-mq'
+    image: rabbitmq:3.11.3-alpine
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    volumes:
+      - ./config/rabbitmq/definitions.json:/etc/rabbitmq/definitions:ro
+      - ./config/rabbitmq/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
+
+  booking-db:
+    container_name: 'postgres-db-booking'
+    image: postgres:14.2-alpine
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_DB=bookingdb
+      - POSTGRES_USER=cand601
+      - POSTGRES_PASSWORD=badpass
+      - POSTGRES_PORT=5432
+
+  processing-db:
+    container_name: 'postgres-db-processing'
+    image: postgres:14.2-alpine
+    ports:
+      - '5433:5432'
+    environment:
+      - POSTGRES_DB=processingdb
+      - POSTGRES_USER=cand601
+      - POSTGRES_PASSWORD=badpass
+      - POSTGRES_PORT=5432
+
+  shipping-db:
+    container_name: 'postgres-db-shipping'
+    image: postgres:14.2-alpine
+    ports:
+      - '5434:5432'
+    environment:
+      - POSTGRES_DB=shippingdb
+      - POSTGRES_USER=cand601
+      - POSTGRES_PASSWORD=badpass
+      - POSTGRES_PORT=5432
+
+  discovery-service:
+    container_name: 'discovery-service'
+    build:
+      context: discovery-service
+      dockerfile: Dockerfile
+    image: discovery-service:latest
+    ports:
+      - '8761:8761'
+    environment:
+      eureka.instance.hostname: discovery-service
+      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka
+
+  gateway-service:
+    container_name: 'gateway-service'
+    depends_on:
+      - discovery-service
+    build:
+      context: gateway-service
+      dockerfile: Dockerfile
+    image: gateway-service:latest
+    ports:
+      - '8080:8080'
+    environment:
+      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka
+
+  booking-service:
+    container_name: 'booking-service'
+    depends_on:
+      - discovery-service
+      - booking-db
+    build:
+      context: booking-service
+      dockerfile: devutils/Dockerfile
+    image: booking-service:latest
+    ports:
+      - '8091:8091'
+    environment:
+      POSTGRES_JDBC_USER: cand601
+      POSTGRES_JDBC_PASSWORD: badpass
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://booking-db:5432/bookingdb'
+      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka/
+
+  processing-service:
+    container_name: 'processing-service'
+    depends_on:
+      - discovery-service
+      - processing-db
+    build:
+      context: processing-service
+      dockerfile: devutils/Dockerfile
+    image: processing-service:latest
+    ports:
+      - '8092:8092'
+    environment:
+      POSTGRES_JDBC_USER: cand601
+      POSTGRES_JDBC_PASSWORD: badpass
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://processing-db:5432/processingdb'
+      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka/
+
+  shipping-service:
+    container_name: 'shipping-service'
+    depends_on:
+      - discovery-service
+      - shipping-db
+    build:
+      context: shipping-service
+      dockerfile: devutils/Dockerfile
+    image: shipping-service:latest
+    ports:
+      - '8093:8093'
+    environment:
+      POSTGRES_JDBC_USER: cand601
+      POSTGRES_JDBC_PASSWORD: badpass
+      SPRING_DATASOURCE_URL: 'jdbc:postgresql://shipping-db:5432/shippingdb'
+      eureka.client.serviceUrl.defaultZone: http://discovery-service:8761/eureka/

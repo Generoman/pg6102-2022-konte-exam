@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: booking-service
+          uri: lb://booking-service
+          predicates:
+            - Path=/api/booking/**
+        - id: processing-service
+          uri: lb://processing-service
+          predicates:
+            - Path=/api/processing/**
+        - id: shipping-service
+          uri: lb://shipping-service
+          predicates:
+            - Path=/api/shipping/**
+server:
+  port: 8080

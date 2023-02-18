@@ -1,0 +1,5 @@
+
+# Project exclude paths
+/booking-service/target/
+/processing-service/target/
+/shipping-service/target/

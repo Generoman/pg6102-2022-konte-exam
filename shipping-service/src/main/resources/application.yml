@@ -1,0 +1,26 @@
+server:
+  port: 8093
+spring:
+  main:
+    web-application-type: reactive
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+  application:
+    name: shipping-service
+  flyway:
+    table: shipping_service_flyway_schema_history
+  jpa:
+    database: postgresql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: 'jdbc:postgresql://localhost:5434/shippingdb'
+    username: cand601
+    password: badpass
