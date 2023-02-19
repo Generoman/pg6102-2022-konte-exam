@@ -1,5 +1,8 @@
 # PG6201 Continuation Exam for Candidate 601
 
+**NOTE:** Dockerfiles do the building, no need to run maven.
+
+## Overview
 To put it shortly, it did not go well. Lots of time was spent trying to fix problems, without any progress. Given more time, I could have done a better job. At this point, I'm happy if I get a passing grade.
 
 A Postman collection can be found in the root folder of this project. During my testing, only the three GET requests worked.
@@ -19,7 +22,7 @@ Last I checked, none of them worked. The happy paths at least show that the serv
 * docker-compose.yml
   * Builds and spins up all services, as long as I regularly reboot my computer. `-p`-flag not used
 * Dockerfiles for all services
-  * No `target` directory needed in project, building is taken care of by Dockerfiles
+  * **No `target` directory needed in project, building is taken care of by Dockerfiles**
 * Custom Exceptions
   * Used these where I thought it made sense. Kept getting one of them during the normal assignment "pipeline"
 
