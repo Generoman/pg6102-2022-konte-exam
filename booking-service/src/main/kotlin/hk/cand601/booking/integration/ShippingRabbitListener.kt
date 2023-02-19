@@ -18,16 +18,13 @@ class ShippingRabbitListener(
 
     private val messageStart = "ShippedOrderId="
 
-    //@RabbitHandler
+    @RabbitHandler
     fun handleMessage(message: String) {
-        /**
-         * Pseudo-log
-         */
-        println("From shipping_queue: $message")
 
         val id = message.substring(messageStart.length).toLong()
+
         bookingService.getBookOrder(id)?.let { bookOrder ->
-            processingIntegrationService.updateToShipped(bookOrder).let {
+            processingIntegrationService.markAsShipped(bookOrder).let {
                 bookingService.updateBookOrder(it)
             }.run {
                 throw EntityNotUpdatedException("Book order with id ${bookOrder.id} not updated")

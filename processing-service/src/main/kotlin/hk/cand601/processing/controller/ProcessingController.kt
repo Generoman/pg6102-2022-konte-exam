@@ -1,10 +1,8 @@
 package hk.cand601.processing.controller
 
-import hk.cand601.processing.service.OrderDTO
+import hk.cand601.processing.dto.FromBookingDTO
 import hk.cand601.processing.service.ProcessingService
 import hk.cand601.processing.exception.BadRequestException
-import hk.cand601.processing.exception.ServiceInterruptionException
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -17,6 +15,7 @@ class ProcessingController(
 
     /**
      * For testing purposes
+     * TODO: remove
      */
     @GetMapping("/happy")
     fun getHappy(): ResponseEntity<Any> {
@@ -24,12 +23,12 @@ class ProcessingController(
     }
 
     @PostMapping("/order")
-    fun checkOrder(@RequestBody orderDto: OrderDTO?): ResponseEntity<Any> {
+    fun checkOrder(@RequestBody fromBookingDto: FromBookingDTO?): ResponseEntity<Any> {
         println("In checkOrder")
-        when(orderDto) {
+        when(fromBookingDto) {
             null -> throw BadRequestException("Order is null")
             else -> {
-                processingService.processOrder(orderDto)?.let {
+                processingService.processOrder(fromBookingDto)?.let {
                     return ResponseEntity.ok().body(it)
                 }.run {
                     throw BadRequestException("Bad isbn")

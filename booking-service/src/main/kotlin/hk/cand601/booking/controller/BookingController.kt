@@ -21,6 +21,7 @@ class BookingController(
 ) {
     /**
      * For testing purposes
+     * TODO: remove
      */
     @GetMapping("/happy")
     fun getHappyPath(): ResponseEntity<Any> {
@@ -30,6 +31,10 @@ class BookingController(
         return ResponseEntity.ok().body("Not happy. :(")
     }
 
+    /**
+     * For testing purposes
+     * TODO: remove
+     */
     @PostMapping("/echo")
     fun getEcho(@RequestBody any: Any): ResponseEntity<Any> {
         return ResponseEntity.ok().body(any)
@@ -60,16 +65,21 @@ class BookingController(
     }
 
     @PostMapping("")
-    fun createOrder(@RequestBody bookOrder: BookOrderEntity?): ResponseEntity<Any> {
-        when(bookOrder) {
+    fun createOrder(@RequestBody newOrder: BookOrderEntity?): ResponseEntity<Any> {
+        when(newOrder) {
             null -> throw BadRequestException("Order is null")
             else -> {
-                bookingService.registerBookOrder(bookOrder)?.let { registeredBookOrder ->
-                    processingIntegrationService.checkAvailability(registeredBookOrder)?.let {
-                        registeredBookOrder.status = it.status
-                        val updatedBookOrder = bookingService.updateBookOrder(registeredBookOrder)
-                        bookingRabbitDispatcher.dispatchBookOrder(it)
-                        return ResponseEntity.ok().body(updatedBookOrder)
+                bookingService.registerBookOrder(newOrder)?.let { registeredOrder ->
+                    processingIntegrationService.checkAvailability(registeredOrder)?.let {
+                        registeredOrder.status = it.status
+                        val updatedOrder = bookingService.updateBookOrder(registeredOrder)
+
+                        if(it.status == "Registered") {
+                            val orderForShippingDto = updatedOrder!!.toShippingDto(it.currentLocation)
+                            bookingRabbitDispatcher.dispatchBookOrder(orderForShippingDto)
+                        }
+
+                        return ResponseEntity.ok().body(updatedOrder)
                     }.run {
                         throw ServiceInterruptionException("Something went wrong")
                     }

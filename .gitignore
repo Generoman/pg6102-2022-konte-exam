@@ -2,5 +2,7 @@
 # Project exclude paths
 */target/
 /.idea/
+
+# Used for alternate Dockerfiles and bash scripts for local testing
 /*/devutils/
 /devutils/

@@ -15,6 +15,7 @@ class ShippingController(
 ) {
     /**
      * For testing purposes
+     * TODO: remove
      */
     @GetMapping("/happy")
     fun getHappyPath(): ResponseEntity<Any> {

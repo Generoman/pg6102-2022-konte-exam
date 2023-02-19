@@ -1,8 +1,8 @@
 package hk.cand601.booking.integration
 
+import hk.cand601.booking.dto.FromProcessingDTO
 import hk.cand601.booking.exception.BadRequestException
 import hk.cand601.booking.exception.ServiceInterruptionException
-import hk.cand601.booking.model.BookOrderDTO
 import hk.cand601.booking.model.BookOrderEntity
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
@@ -16,13 +16,13 @@ class ProcessingIntegrationService() {
     private val restTemplate = RestTemplate()
     val baseUrl = "http://processing-service/api/processing"
 
-    fun checkAvailability(bookOrder: BookOrderEntity): BookOrderDTO? {
+    fun checkAvailability(bookOrder: BookOrderEntity): FromProcessingDTO? {
         bookOrder.id?.let {
             val url = "$baseUrl/order"
-            val bookOrderDTO = bookOrder.toDto()
+            val orderDto = bookOrder.toProcessingDto()
 
             try {
-                restTemplate.postForEntity(url, bookOrderDTO, BookOrderDTO::class.java).body?.let {
+                restTemplate.postForEntity(url, orderDto, FromProcessingDTO::class.java).body?.let {
                     return it
                 }
             } catch (e: Exception) {
@@ -33,7 +33,7 @@ class ProcessingIntegrationService() {
         }
     }
 
-    fun updateToShipped(bookOrder: BookOrderEntity): BookOrderEntity {
+    fun markAsShipped(bookOrder: BookOrderEntity): BookOrderEntity {
         val url = "$baseUrl/shipped"
 
         try {
@@ -46,6 +46,9 @@ class ProcessingIntegrationService() {
         }
     }
 
+    /**
+     * TODO: remove
+     */
     fun isHappy(): Boolean {
         val url = "$baseUrl/happy"
 

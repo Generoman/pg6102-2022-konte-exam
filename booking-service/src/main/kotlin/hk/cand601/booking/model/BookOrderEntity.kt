@@ -1,5 +1,7 @@
 package hk.cand601.booking.model
 
+import hk.cand601.booking.dto.OrderToProcessingDTO
+import hk.cand601.booking.dto.OrderToShippingDTO
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -33,15 +35,12 @@ class BookOrderEntity(
     @Column(name = "updated_at")
     var updatedAt: LocalDateTime = LocalDateTime.now()
 ) {
-    fun toDto(): BookOrderDTO {
-        return BookOrderDTO(id, isbn, status, requestedLocation)
+
+    fun toProcessingDto(): OrderToProcessingDTO {
+        return OrderToProcessingDTO(isbn, requestedLocation)
+    }
+
+    fun toShippingDto(currentLocation: String): OrderToShippingDTO {
+        return OrderToShippingDTO(id!!, userId, isbn, requestedLocation, currentLocation, createdAt)
     }
 }
-
-data class BookOrderDTO(
-    val id: Long?,
-    val isbn: String,
-    var status: String,
-    val requestedLocation: String,
-    var currentLocation: String? = null
-)

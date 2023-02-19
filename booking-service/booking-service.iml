@@ -63,6 +63,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-actuator:2.7.8" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.7.8" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.7.8" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.7.8" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-logging:2.7.8" level="project" />
     <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.2.11" level="project" />
     <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.2.11" level="project" />
@@ -220,9 +222,6 @@
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-cache:2.7.8" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:5.3.25" level="project" />
     <orderEntry type="library" name="Maven: com.stoyanr:evictor:1.0.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.springframework.boot:spring-boot-devtools:2.7.8" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.7.8" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:2.7.8" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.postgresql:postgresql:42.3.8" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.checkerframework:checker-qual:3.5.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-starter-test:2.7.8" level="project" />

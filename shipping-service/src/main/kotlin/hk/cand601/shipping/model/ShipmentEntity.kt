@@ -18,6 +18,9 @@ class ShipmentEntity(
     @Column(name = "order_id")
     val orderId: Long,
 
+    @Column(name = "user_id")
+    val userId: Long,
+
     @Column(name = "isbn")
     val isbn: String,
 
@@ -26,6 +29,9 @@ class ShipmentEntity(
 
     @Column(name = "current_location")
     val currentLocation: String,
+
+    @Column(name = "time_ordered_at")
+    val timeOrderedAt: LocalDateTime,
 
     @Column(name = "created_at")
     val createdAt: LocalDateTime = LocalDateTime.now(),
