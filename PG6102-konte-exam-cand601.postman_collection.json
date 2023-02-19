@@ -1,0 +1,156 @@
+{
+	"info": {
+		"_postman_id": "9511c861-6fa3-4d93-ab42-93ad1560406d",
+		"name": "PG6102-konte-exam-cand601",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20367704"
+	},
+	"item": [
+		{
+			"name": "processing/happy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/processing/happy",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"processing",
+						"happy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "booking/happy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/booking/happy",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"booking",
+						"happy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "shipping/happy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/shipping/happy",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"shipping",
+						"happy"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "assignment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": 1,\r\n    \"isbn\": \"978-0-321-14653-3\",\r\n    \"requestedLocation\": \"Alphaville\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/booking",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "booking/MQ-workaround",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\": \"Registered\",\r\n    \"currentLocation\": \"Betatown\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/booking/ship/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"booking",
+						"ship",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "shipping/MQ-workaround",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"userId\": 1,\r\n    \"isbn\": \"978-0-321-14653-3\",\r\n    \"requestedLocation\": \"Alphaville\",\r\n    \"currentLocation\": \"Betatown\",\r\n    \"timeOrderedAt\": \"2023-02-19T17:50:43.980341\",\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/shipping",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"shipping"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

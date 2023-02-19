@@ -45,19 +45,4 @@ class ProcessingIntegrationService() {
             throw ServiceInterruptionException("Processing Service could not be reached. Message: ${e.message}")
         }
     }
-
-    /**
-     * TODO: remove
-     */
-    fun isHappy(): Boolean {
-        val url = "$baseUrl/happy"
-
-        try {
-            restTemplate.getForEntity(url, Any::class.java).let {
-                return true
-            }
-        } catch (e: Exception) {
-            return false
-        }
-    }
 }

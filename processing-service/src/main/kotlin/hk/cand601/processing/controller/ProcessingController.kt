@@ -21,7 +21,6 @@ class ProcessingController(
 
     /**
      * For testing purposes
-     * TODO: remove
      */
     @GetMapping("/happy")
     fun getHappy(): ResponseEntity<Any> {
