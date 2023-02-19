@@ -1,7 +1,9 @@
 package hk.cand601.shipping.controller
 
+import hk.cand601.shipping.dto.OrderDTO
 import hk.cand601.shipping.exception.BadRequestException
 import hk.cand601.shipping.exception.EntityNotFoundException
+import hk.cand601.shipping.integration.BookingRabbitListener
 import hk.cand601.shipping.model.ShipmentEntity
 import hk.cand601.shipping.service.ShippingService
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/shipping")
 class ShippingController(
     @Autowired private val shippingService: ShippingService,
+    @Autowired private val bookingRabbitListener: BookingRabbitListener
 ) {
     /**
      * For testing purposes
@@ -44,5 +47,20 @@ class ShippingController(
                 }
             }
         }
+    }
+
+    /**
+     * Workaround because message serialization failed
+     */
+    @PostMapping("")
+    fun postShipment(@RequestBody orderDto: OrderDTO): ResponseEntity<String> {
+        bookingRabbitListener.handleMessage(orderDto)
+        return ResponseEntity.ok().body("Order shipped")
+    }
+
+    @PostMapping("/delete/{id}")
+    fun deleteShipment(@PathVariable id: Long): ResponseEntity<String> {
+        shippingService.deleteShipment(id)
+        return ResponseEntity.ok().body("Shipment with id $id deleted")
     }
 }

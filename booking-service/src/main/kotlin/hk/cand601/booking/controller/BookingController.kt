@@ -1,5 +1,6 @@
 package hk.cand601.booking.controller
 
+import hk.cand601.booking.dto.FromProcessingDTO
 import hk.cand601.booking.exception.BadRequestException
 import hk.cand601.booking.exception.EntityNotCreatedException
 import hk.cand601.booking.exception.EntityNotFoundException
@@ -25,19 +26,7 @@ class BookingController(
      */
     @GetMapping("/happy")
     fun getHappyPath(): ResponseEntity<Any> {
-        if(processingIntegrationService.isHappy()) {
-            return ResponseEntity.ok().body("Happy! :)")
-        }
-        return ResponseEntity.ok().body("Not happy. :(")
-    }
-
-    /**
-     * For testing purposes
-     * TODO: remove
-     */
-    @PostMapping("/echo")
-    fun getEcho(@RequestBody any: Any): ResponseEntity<Any> {
-        return ResponseEntity.ok().body(any)
+        return ResponseEntity.ok().body("Happy! :)")
     }
 
     @GetMapping("")
@@ -88,5 +77,32 @@ class BookingController(
                 }
             }
         }
+    }
+
+    /**
+     * Workaround because calls between services didn't work
+     * Should strictly be UPDATE, not PUT, with how I'm using it
+     * Still not working because of serialization problems
+     */
+    @PutMapping("/ship/{id}")
+    fun shipOrder(@RequestBody fromProcessingDTO: FromProcessingDTO, @PathVariable id: Long): ResponseEntity<String> {
+        bookingService.getBookOrder(id)?.let {
+            it.status = fromProcessingDTO.status
+            val updatedOrder = bookingService.updateBookOrder(it)!!
+            if(it.status == "Registered") {
+                val orderForShippingDto = updatedOrder.toShippingDto(fromProcessingDTO.currentLocation)
+                bookingRabbitDispatcher.dispatchBookOrder(orderForShippingDto)
+                return ResponseEntity.ok().body("Order sent to shipping")
+            }
+            return ResponseEntity.ok().body("Order could not be shipped")
+        }.run {
+            throw EntityNotFoundException("Order with id $id not found")
+        }
+    }
+
+    @PostMapping("/delete/{id}")
+    fun deleteOrder(@PathVariable id: Long): ResponseEntity<String> {
+        bookingService.deleteBookOrder(id)
+        return ResponseEntity.ok().body("Order with id $id deleted")
     }
 }

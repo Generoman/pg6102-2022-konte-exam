@@ -47,8 +47,7 @@ services:
     container_name: 'discovery-service'
     build:
       context: discovery-service
-      # TODO: remove "devutils/"
-      dockerfile: devutils/Dockerfile
+      dockerfile: Dockerfile
     image: discovery-service:latest
     ports:
       - '8761:8761'
@@ -62,8 +61,7 @@ services:
       - discovery-service
     build:
       context: gateway-service
-      # TODO: remove "devutils/"
-      dockerfile: devutils/Dockerfile
+      dockerfile: Dockerfile
     image: gateway-service:latest
     ports:
       - '8080:8080'
@@ -77,8 +75,7 @@ services:
       - booking-db
     build:
       context: booking-service
-      # TODO: remove "devutils/"
-      dockerfile: devutils/Dockerfile
+      dockerfile: Dockerfile
     image: booking-service:latest
     ports:
       - '8091:8091'
@@ -95,8 +92,7 @@ services:
       - processing-db
     build:
       context: processing-service
-      # TODO: remove "devutils/"
-      dockerfile: devutils/Dockerfile
+      dockerfile: Dockerfile
     image: processing-service:latest
     ports:
       - '8092:8092'
@@ -113,8 +109,7 @@ services:
       - shipping-db
     build:
       context: shipping-service
-      # TODO: remove "devutils/"
-      dockerfile: devutils/Dockerfile
+      dockerfile: Dockerfile
     image: shipping-service:latest
     ports:
       - '8093:8093'

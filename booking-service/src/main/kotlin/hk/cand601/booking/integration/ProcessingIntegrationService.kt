@@ -26,7 +26,7 @@ class ProcessingIntegrationService() {
                     return it
                 }
             } catch (e: Exception) {
-                throw ServiceInterruptionException("Processing Service could not be reached. Message: ${e.message}")
+                throw ServiceInterruptionException("Order with id ${bookOrder.id} could not be processed. Processing Service could not be reached. Message: ${e.message}")
             }
         }.run {
             throw BadRequestException("Order missing id")

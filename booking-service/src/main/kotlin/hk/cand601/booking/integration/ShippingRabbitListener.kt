@@ -21,6 +21,8 @@ class ShippingRabbitListener(
     @RabbitHandler
     fun handleMessage(message: String) {
 
+        println("Message recieved: $message")
+
         val id = message.substring(messageStart.length).toLong()
 
         bookingService.getBookOrder(id)?.let { bookOrder ->
